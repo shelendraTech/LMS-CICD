@@ -1,0 +1,30 @@
+name: "Diploy on aws"
+
+on: workflow_dispatch
+
+jobs:
+  diploy:
+    runs-on: self-hosted
+
+    steps: 
+      - name: "setup nodejs"
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: "Checkout code"
+        uses: actions/checkout@v2
+
+      - name: "Install dependencies"
+        run: npm install
+
+      - name: "install pm2 global"
+        run: npm install pm2 -g
+
+      - name: "run the test"  
+        run: npm run test
+
+      - name: "Deploy on aws"  
+        run: pm2 start server.js
+
+
